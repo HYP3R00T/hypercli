@@ -1,0 +1,4 @@
+pyfiglet
+Pygments
+rich
+termcolor
