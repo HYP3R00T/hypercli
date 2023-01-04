@@ -16,7 +16,7 @@
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install `hypercli`.
+Use the package manager [pip](https://pypi.org/project/hypercli/) to install `hypercli`.
 
 ```bash
 pip install hypercli
