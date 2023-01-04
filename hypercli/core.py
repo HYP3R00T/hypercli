@@ -77,7 +77,6 @@ class cli:
         return self.enter_choice(menu_name, show_exit)
 
     def enter_choice(self, menu_name, show_exit):
-
         choice = input("\u279D ")
         for (index, (k, v)) in enumerate(self.menu[menu_name].items()):
             if int(choice) <= len(self.menu[menu_name]):

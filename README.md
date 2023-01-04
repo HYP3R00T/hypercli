@@ -10,7 +10,7 @@
 ```
 
 
-# Foobar
+# hypercli
 
 `hypercli` is a Python library for creating a good looking command line interface. Primarily it can generate menu with very simple steps. We can also create some banners as well. Everything one need to create create interactive command line interface. 
 
