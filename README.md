@@ -22,7 +22,7 @@ Use the package manager [pip](https://pypi.org/project/hypercli/) to install `hy
 pip install hypercli
 ```
 
-## Usage
+## Demonstration
 
 ```python
 from hypercli import cli
@@ -54,10 +54,11 @@ response = hyper.show_cli()
 response()
 ```
 
+![](docs/assests/basic_demo.gif)
+
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
