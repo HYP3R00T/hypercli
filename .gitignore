@@ -6,3 +6,5 @@ sdist/
 .venv
 env/
 venv/
+.vscode/
+.vscode
