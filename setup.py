@@ -5,10 +5,10 @@ with open("./README.md", "r") as readme:
 
 setuptools.setup(
     name="hypercli",
-    version="0.1.4",
+    version="0.1.6",
     author="HYP3R00T",
     author_email="contact@hyperoot.live",
-    description="A python based CLI tool",
+    description="Enhanced Menu and CLI generator",
     url="https://github.com/the-hyperoot/hyper_cli",
     long_description=desc,
     long_description_content_type='text/markdown',
