@@ -6,8 +6,10 @@ from rich.console import Console
 from rich.table import Table
 from rich import box
 
-
-width = get_terminal_size()[0]
+try:
+    width = get_terminal_size()[0]
+except:
+    width = 80
 
 
 class cli:
