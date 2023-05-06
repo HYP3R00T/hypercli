@@ -80,15 +80,17 @@ class cli:
         self.visual[f"{menu_name}"]["show_border"] = show_border
         self.visual[f"{menu_name}"]["show_exit"] = show_exit
 
-    def add_option(self, menu_name, option, function=None):
+    def add_option(self, menu_name, option, function=None, *args, **kwargs):
         """
         It adds an option to a menu
         
         :param menu_name: The name of the menu you want to add the option to
         :param option: The name of the option to add to the menu
         :param function: The function to be called when the option is selected
+        :param args: Additional positional arguments for the function
+        :param kwargs: Additional keyword arguments for the function
         """
-        self.menu[menu_name][option] = function
+        self.menu[menu_name][option] = (function, args, kwargs)
 
     def show_cli(self, menu_name=None):
         """
@@ -138,16 +140,18 @@ class cli:
         for (index, (k, v)) in enumerate(self.menu[menu_name].items()):
             if int(choice) <= len(self.menu[menu_name]):
                 if int(choice) == index + 1:
-                    if isinstance(v, str):
-                        return self.show_cli(v)
-                    elif v != None:
-                        return v
+                    function, args, kwargs = v
+                    if isinstance(function, str):
+                        return self.show_cli(function)
+                    elif function is not None:
+                        return function(*args, **kwargs)
                     else:
                         return self.common_func.error()
                 elif int(choice) == 0 and show_exit == True:
                     return self.common_func.exit()
             else:
                 return self.common_func.error()
+
 
 
 class Banner:
