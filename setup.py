@@ -1,3 +1,5 @@
+# ! Don't forget to update the version details in README.md
+
 import setuptools
 
 with open("./README.md", "r") as readme:
@@ -5,18 +7,15 @@ with open("./README.md", "r") as readme:
 
 setuptools.setup(
     name="hypercli",
-    version="0.2.0",
+    version="1.0.0",
     author="HYP3R00T",
-    author_email="contact@hyperoot.live",
-    description="Enhanced Menu and CLI generator",
-    url="https://github.com/the-hyperoot/hyper_cli",
+    author_email="hyperoot@pm.me",
+    description="Generate enhanced menu-driven CLI programs with ease",
+    url="https://github.com/HYP3R00T/hypercli",
     long_description=desc,
-    long_description_content_type='text/markdown',
-    license='MIT',
-    packages=['hypercli'],
+    long_description_content_type="text/markdown",
+    license="MIT",
+    packages=["hypercli"],
     zip_safe=False,
-    install_requires=['pyfiglet',
-                      'rich',
-                      'termcolor'
-                      ]
+    install_requires=["pyfiglet", "rich", "termcolor"],
 )

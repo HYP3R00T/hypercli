@@ -1,29 +1,34 @@
-from hypercli import cli
-import webbrowser
+from hypercli import hypercli
+
+cli = hypercli()
+cli.link("main", "main2")
 
 
-def author_name():
-    print("HYP3R00T")
+@cli.entry(menu="main", option="multiply")
+def multiply(num1=1, num2=1):
+    a = int(input(f"Enter first number (default {num1}): ") or num1)
+    b = int(input(f"Enter second number (default {num2}): ") or num2)
+    print(f"{a} * {b} = {a * b}")
 
 
-def open_website():
-    webbrowser.open("https://hyperoot.live")
-
-def greet(name):
+@cli.entry(menu="main", option="greet")
+def greet():
+    name = input("Enter your name: ")
     print(f"Hello, {name}!")
 
-hyper = cli()
 
-hyper.create_banner("hypercli")
-hyper.create_intro("Intro", "An elegant solution to interact\n with command line tools")
+@cli.entry(menu="main2", option="add")
+def add(num1=1, num2=1):
+    a = int(input(f"Enter first number (default {num1}): ") or num1)
+    b = int(input(f"Enter second number (default {num2}): ") or num2)
+    print(f"{a} + {b} = {a + b}")
 
-hyper.create_menu("Main Menu", "Enter your choice")
-hyper.add_option("Main Menu", "Checkout the Sub Menu", "Sub Menu")
-hyper.add_option("Main Menu", "Greet", greet, "John")
-hyper.add_option("Main Menu", "Print Author Name", author_name)
 
-hyper.create_menu("Sub Menu", "Enter your choice")
-hyper.add_option("Sub Menu", "Go Back to Main Menu", "Main Menu")
-hyper.add_option("Sub Menu", "Checkout the Website (hyperoot.live)", open_website)
+@cli.entry(menu="main3", option="subtract")
+def sub(num1=1, num2=1):
+    a = int(input(f"Enter first number (default {num1}): ") or num1)
+    b = int(input(f"Enter second number (default {num2}): ") or num2)
+    print(f"{a} - {b} = {a - b}")
 
-response = hyper.show_cli()
+
+cli.run("main")
