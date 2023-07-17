@@ -1,2 +1,1 @@
-from .core import cli
-# from .core_alt import cli
+from .core import hypercli

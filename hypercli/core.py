@@ -1,10 +1,11 @@
-from os import system, name, get_terminal_size
-from termcolor import cprint
+from os import get_terminal_size, name, system
+
 from pyfiglet import Figlet
-from rich.panel import Panel
-from rich.console import Console
-from rich.table import Table
 from rich import box
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+from termcolor import cprint
 
 try:
     width = get_terminal_size()[0]
@@ -12,229 +13,230 @@ except:
     width = 80
 
 
-class cli:
+class hypercli:
     def __init__(self) -> None:
         """
-        It initializes the menu, context, and visual dictionaries, sets the show_banner, show_intro, and
-        show_context variables to False, and initializes the common_func and console variables
+        The above function is the initialization method for a class that sets up various configuration
+        options and properties.
         """
-        self.menu = {}
-        self.context = {}
-        self.visual = {}
-
-        self.show_banner = False
-        self.show_intro = False
-        self.show_context = False
-
-        self.common_func = Common_func()
+        self.menu_wrapper = dict()
         self.console = Console()
+        self.config = {
+            "show_banner": True,
+            "show_intro": True,
+            "show_exit": True,
+            "show_menu_table_header": False,
+            "exit_text": "Quit ✗",
+            "banner_text": "hypercli",
+            "banner_color": "cyan",
+            "banner_font": "big",
+            "banner_justify": "center",
+            "banner_width": width,
+            "intro_title": "Welcome to hypercli!",
+            "intro_title_color": "red bold",
+            "intro_content": "A simple menu-driven CLI program generator",
+            "intro_content_color": "magenta",
+            "intro_justify": "center",
+            "menu_context_color": "blue",
+            "menu_option_color": "green",
+            "menu_exit_color": "red bold",
+            "menu_border_style": box.SQUARE,
+            "menu_table_header_color": "bright_black",
+            "error_message_title": "\u26A0  ERROR \u26A0 ",
+            "error_message": "Invalid input\nProgram is terminated",
+            "error_message_title_color": "red bold",
+            "error_message_color": "magenta",
+            "error_message_justify": "center",
+            "exit_message_title": "\u263A BYE \u263A ",
+            "exit_message": "Have a great day\nProgram is terminated",
+            "exit_message_title_color": "green bold",
+            "exit_message_color": "blue",
+            "exit_message_justify": "center",
+        }
+        self.banner = Figlet(
+            font=self.config["banner_font"],
+            justify=self.config["banner_justify"],
+            width=self.config["banner_width"],
+        )
 
-    def create_banner(self, banner, figlet_font='big', banner_color='green', justify='center'):
+    def link(self, from_menu, to_menu, option_text="Go to", reverse=True):
         """
-        This function takes in a string, a figlet font, a color, and a justification and returns a
-        banner object
-        
-        :param banner: The text to be displayed in the banner
-        :param figlet_font: The font to use for the banner, defaults to big (optional)
-        :param banner_color: The color of the banner, defaults to green (optional)
-        :param justify: left, center, right, defaults to center (optional)
-        """
-        self.show_banner = True
-        self.banner = Banner(
-            banner, figlet_font=figlet_font, banner_color=banner_color, justify=justify)
+        The function `link` creates a link between two menus by adding an option to navigate from one
+        menu to another.
 
-    def create_intro(self, intro_title, intro, intro_title_color='red', intro_color='blue', justify='center'):
+        :param from_menu: The menu from which the link is being created
+        :param to_menu: The menu that the link will lead to
+        :param option_text: The `option_text` parameter is a string that represents the text that will
+        be displayed for the link option in the menu. By default, it is set to "Go to", defaults to Go
+        to (optional)
+        :param reverse: The "reverse" parameter is a boolean value that determines whether or not to
+        create a reverse link between the menus. If set to True, a link will be created from the
+        "to_menu" to the "from_menu" with the option text "Go to". If set to False, no reverse, defaults
+        to True (optional)
         """
-        This function creates an intro object and sets the show_intro variable to True
-        
-        :param intro_title: The title of the intro
-        :param intro: The text of the intro
-        :param intro_title_color: The color of the title of the intro, defaults to red (optional)
-        :param intro_color: The color of the text in the intro, defaults to blue (optional)
-        :param justify: 'left', 'center', 'right', defaults to center (optional)
-        """
-        self.show_intro = True
-        self.intro = Intro(
-            intro=intro, intro_title=intro_title, intro_title_color=intro_title_color, intro_color=intro_color, justify=justify)
+        if from_menu not in self.menu_wrapper:
+            self.menu_wrapper[from_menu] = dict()
+        if to_menu not in self.menu_wrapper:
+            self.menu_wrapper[to_menu] = dict()
+        self.menu_wrapper[from_menu][f"{option_text} {to_menu}"] = to_menu
+        if reverse:
+            self.menu_wrapper[to_menu][f"{option_text} {from_menu}"] = from_menu
 
-    def create_menu(self, menu_name, detail=None, context_color="yellow", option_color="white", exit_color="red", show_border=False, show_exit=True):
+    def entry(
+        self,
+        menu,
+        option,
+        menu_context_color=None,
+        menu_option_color=None,
+        menu_exit_color=None,
+    ):
         """
-        This function creates a menu with a name, a detail, a context color, an option color, an exit
-        color, a show border boolean, and a show exit boolean
-        
-        :param menu_name: The name of the menu
-        :param detail: This is the text that will be displayed at the top of the menu
-        :param context_color: The color of the menu's context, defaults to yellow (optional)
-        :param option_color: The color of the options in the menu, defaults to white (optional)
-        :param exit_color: The color of the exit option, defaults to red (optional)
-        :param show_border: If True, a border will be drawn around the menu, defaults to False
-        (optional)
-        :param show_exit: If True, the exit option will be shown, defaults to True (optional)
-        """
-        self.menu[f"{menu_name}"] = {}
-        self.context[f"{menu_name}"] = detail
-        self.visual[f"{menu_name}"] = {}
-        self.visual[f"{menu_name}"]["context_color"] = context_color
-        self.visual[f"{menu_name}"]["option_color"] = option_color
-        self.visual[f"{menu_name}"]["exit_color"] = exit_color
-        self.visual[f"{menu_name}"]["show_border"] = show_border
-        self.visual[f"{menu_name}"]["show_exit"] = show_exit
+        The `entry` function is a decorator that adds a menu option to a menu wrapper and allows for
+        customization of menu colors.
 
-    def add_option(self, menu_name, option, function=None, *args, **kwargs):
+        :param menu: The "menu" parameter is a string that represents the name of the menu. It is used
+        to group related options together
+        :param option: The "option" parameter is used to specify the option within a menu. It is used to
+        identify a specific function that will be executed when that option is selected from the menu
+        :param menu_context_color: The `menu_context_color` parameter is used to specify the color of
+        the menu context text
+        :param menu_option_color: The parameter `menu_option_color` is used to specify the color of the
+        menu option text
+        :param menu_exit_color: The `menu_exit_color` parameter is an optional parameter that specifies
+        the color of the menu exit option. It is used to customize the appearance of the menu exit
+        option in the user interface
+        :return: The `decorator` function is being returned.
         """
-        It adds an option to a menu
-        
-        :param menu_name: The name of the menu you want to add the option to
-        :param option: The name of the option to add to the menu
-        :param function: The function to be called when the option is selected
-        :param args: Additional positional arguments for the function
-        :param kwargs: Additional keyword arguments for the function
-        """
-        self.menu[menu_name][option] = (function, args, kwargs)
 
-    def show_cli(self, menu_name=None):
-        """
-        It prints a menu to the console
-        
-        :param menu_name: The name of the menu to show
-        :return: The return value is the value of the option that was selected.
-        """
-        self.common_func.clear()
-        if self.show_banner:
-            self.banner.show_banner()
-        if self.show_intro:
-            self.intro.show_intro()
-        if menu_name == None:
-            for k, v in self.menu.items():
-                menu_name = k
-                break
-        context_color = self.visual[f"{menu_name}"]["context_color"]
-        option_color = self.visual[f"{menu_name}"]["option_color"]
-        exit_color = self.visual[f"{menu_name}"]["exit_color"]
-        if self.visual[f"{menu_name}"]["show_border"] == False:
-            show_border = box.SIMPLE
-        else:
-            show_border = box.HEAVY_HEAD
-        show_exit = self.visual[f"{menu_name}"]["show_exit"]
-        if self.context[f"{menu_name}"] != None:
-            self.console.print(
-                "\n"+self.context[f"{menu_name}"], style=context_color)
-        table = Table(show_header=False, box=show_border)
-        for (index, (k, v)) in enumerate(self.menu[menu_name].items()):
-            table.add_row(str(index+1), str(k), style=option_color)
-        table.add_section()
-        if show_exit == True:
-            table.add_row("0", "exit", style=exit_color)
-        self.console.print(table)
-        return self.enter_choice(menu_name, show_exit)
+        def decorator(func):
+            if menu not in self.menu_wrapper:
+                self.menu_wrapper[menu] = dict()
+            if option not in self.menu_wrapper[menu]:
+                self.menu_wrapper[menu][option] = func
+            if menu_context_color:
+                self.config[menu]["menu_context_color"] = menu_context_color
+            if menu_option_color:
+                self.config[menu]["menu_option_color"] = menu_option_color
+            if menu_exit_color:
+                self.config[menu]["menu_exit_color"] = menu_exit_color
+            return func
 
-    def enter_choice(self, menu_name, show_exit):
+        return decorator
+
+    def enter_choice(self, menu_name):
         """
-        It takes a menu name, and a boolean value, and returns a function based on the user's choice
-        
-        :param menu_name: The name of the menu you want to display
-        :param show_exit: If True, the user can exit the menu by entering 0
-        :return: The return value is the function that is being called.
+        The function takes a menu name as input and prompts the user for a choice, then executes the
+        corresponding function based on the choice.
+
+        :param menu_name: The `menu_name` parameter is a string that represents the name of the menu. It
+        is used to access the corresponding menu dictionary in the `self.menu_wrapper` attribute
+        :return: different values based on the conditions met. The possible return values are:
         """
         choice = input("\u279D ")
-        for (index, (k, v)) in enumerate(self.menu[menu_name].items()):
-            if int(choice) <= len(self.menu[menu_name]):
+        for index, (k, v) in enumerate(self.menu_wrapper[menu_name].items()):
+            if choice == "q" or choice == "Q":
+                return self.exit()
+            elif choice.isalnum() and not choice.isnumeric():
+                return self.error()
+            elif int(choice) <= len(self.menu_wrapper[menu_name]):
                 if int(choice) == index + 1:
-                    function, args, kwargs = v
+                    function = v
                     if isinstance(function, str):
-                        return self.show_cli(function)
+                        return self.run(function)
                     elif function is not None:
-                        return function(*args, **kwargs)
+                        return function()
                     else:
-                        return self.common_func.error()
-                elif int(choice) == 0 and show_exit == True:
-                    return self.common_func.exit()
+                        return self.error()
             else:
-                return self.common_func.error()
+                return self.error()
 
-
-
-class Banner:
-    def __init__(self, banner, figlet_font, banner_color, justify) -> None:
+    def run(self, menu_name=None):
         """
-        This function is used to print a banner in the terminal
-        
-        :param banner: The text you want to display
-        :param figlet_font: The font you want to use
-        :param banner_color: The color of the banner
-        :param justify: left, center, right
-        """
-        self.banner = banner
-        self.banner_color = banner_color
-        self.justify = justify
+        The `run` function displays a menu with options and allows the user to make a choice.
 
-        self.common_func = Common_func()
-        self.f = Figlet(font=figlet_font, justify=self.justify, width=width)
-
-    def show_banner(self):
+        :param menu_name: The `menu_name` parameter is used to specify the name of the menu that should
+        be displayed. If no `menu_name` is provided, the code will default to the first menu in the
+        `menu_wrapper` dictionary
+        :return: the result of the `enter_choice()` method, which is called with the `menu_name`
+        argument.
         """
-        It takes a string, and prints it to the screen in a fancy way
-        """
-        cprint(self.f.renderText(self.banner), color=self.banner_color)
-
-
-class Intro:
-    def __init__(self, intro, intro_title, intro_title_color, intro_color, justify) -> None:
-        """
-        This function is used to create a new instance of the class
-        
-        :param intro: The text that will be displayed
-        :param intro_title: The title of the intro
-        :param intro_title_color: The color of the title of the intro
-        :param intro_color: The color of the text in the intro
-        :param justify: left, right, center
-        """
-        self.intro = intro
-        self.intro_title = intro_title
-        self.intro_color = intro_color
-        self.intro_title_color = intro_title_color
-        self.justify = justify
-
-        self.c = Console()
-
-    def show_intro(self):
-        """
-        It prints a panel with a title and a style
-        """
-        self.c.print(Panel(f"{self.intro}",
-                     style=f"{self.intro_color} bold", title=f"[{self.intro_title_color}]{self.intro_title}"), justify=self.justify)
-
-
-class Common_func:
-    def __init__(self) -> None:
-        """
-        This function is a constructor that initializes the Console class
-        """
-        self.c = Console()
+        self.clear()
+        if self.config["show_banner"]:
+            cprint(
+                self.banner.renderText(self.config["banner_text"]),
+                color=self.config["banner_color"],
+            )
+        if self.config["show_intro"]:
+            self.console.print(
+                Panel(
+                    f"{self.config['intro_content']}",
+                    style=f"{self.config['intro_content_color']} bold",
+                    title=f"[{self.config['intro_title_color']}]{self.config['intro_title']}",
+                ),
+                justify=self.config["intro_justify"],
+            )
+        if menu_name == None:
+            for menu, options in self.menu_wrapper.items():
+                menu_name = menu
+                break
+        table = Table(
+            show_header=self.config["show_menu_table_header"],
+            style=self.config["menu_table_header_color"],
+            box=self.config["menu_border_style"],
+        )
+        if self.config["show_menu_table_header"]:
+            table.add_column("Choice", justify="center")
+            table.add_column("Option", justify="left")
+        for index, (option, option_value) in enumerate(
+            self.menu_wrapper[menu_name].items()
+        ):
+            table.add_row(
+                str(index + 1), str(option), style=self.config["menu_option_color"]
+            )
+        table.add_section()
+        if self.config["show_exit"]:
+            table.add_row(
+                "q", self.config["exit_text"], style=self.config["menu_exit_color"]
+            )
+        self.console.print(table, justify="left")
+        return self.enter_choice(menu_name)
 
     def exit(self):
         """
-        It clears the screen, prints a message, and exits the program
-        :return: The exit function is being returned.
+        The above function clears the console and prints an exit message with specified formatting
+        before exiting the program.
+        :return: The `exit` function is returning the `exit` keyword, which is used to exit the program.
         """
         self.clear()
-        self.c.print(Panel("Have a great day\nProgram is terminated", style="blue",
-                     title=f"[green bold]\u263A BYE \u263A"), justify="center")
+        self.console.print(
+            Panel(
+                self.config["exit_message"],
+                style=self.config["exit_message_color"],
+                title=f"[{self.config['exit_message_title_color']}]{self.config['exit_message_title']}",
+            ),
+            justify=self.config["exit_message_justify"],
+        )
         return exit
 
     def error(self):
         """
-        It prints an error message and exits the program
-        :return: The exit function is being returned.
+        The function `error` clears the console and prints an error message with a specified title and
+        color.
+        :return: the exit keyword.
         """
         self.clear()
-        self.c.print(Panel("Invalid input\nProgram is terminated", style="blue",
-                     title=f"[red bold]\u26A0  ERROR \u26A0 "), justify="center")
+        self.console.print(
+            Panel(
+                self.config["error_message"],
+                style=self.config["error_message_color"],
+                title=f"[{self.config['error_message_title_color']}]{self.config['error_message_title']}",
+            ),
+            justify=self.config["error_message_justify"],
+        )
         return exit
 
     def clear(self):
         """
-        If the operating system is Windows, clear the screen using the cls command, otherwise clear the
-        screen using the clear command
+        The function clears the console screen.
         """
-        system('cls' if name == 'nt' else 'clear')
+        system("cls" if name == "nt" else "clear")
