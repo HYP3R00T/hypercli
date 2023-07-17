@@ -1,4 +1,3 @@
 pyfiglet
-Pygments
 rich
 termcolor

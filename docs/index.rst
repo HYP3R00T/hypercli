@@ -7,7 +7,7 @@
    | | | | |_| | |_) |  __/ | | (__| | |
    |_| |_|\__, | .__/ \___|_|  \___|_|_|
            __/ | |
-          |___/|_|               v 0.2.0
+          |___/|_|               v 1.0.1
 
 hypercli
 ========
@@ -20,10 +20,10 @@ and execute functions based on their choices.
 Features
 --------
 
--  Interactive menu-based CLI
--  Customizable banners and intros
--  Support for different visual styles and colors
--  Easy integration with existing Python scripts
+-  Generate menu-driven CLI programs with ease using decorators
+-  Customize the menus, options, and visual styles according to your
+   requirements
+-  Supports nested menus and navigation between menus
 
 Installation
 ------------
@@ -38,47 +38,69 @@ following command:
 Usage
 -----
 
-To use **hypercli**, import the ``cli`` module from the ``hypercli``
-package and create an instance of the ``cli`` class. You can then define
-your menus, options, and functions to be executed. Finally, call the
-``show_cli()`` method to start the CLI interface.
+To use **hypercli**, import the ``hypercli`` module from the
+``hypercli`` package and create an instance of the ``hypercli`` class.
+You can then define your menus, options, and functions to be executed.
+Finally, call the ``run()`` method to start the CLI interface.
 
 Here’s an example of how to use **hypercli**:
 
 .. code:: python
 
-   from hypercli import cli
-   import webbrowser
+   # import hypercli
+   from hypercli import hypercli
 
-   def author_name():
-       print("HYP3R00T")
+   # create an instance of hypercli
+   cli = hypercli()
 
-   def open_website():
-       webbrowser.open("https://hyperoot.dev")
+   # configure the instance
+   cli.config["banner_text"] = "HYPERCLI"
+   cli.config["intro_title"] = "Intro"
+   cli.config["intro_content"] = "Generate enhanced menu-driven CLI programs with ease!"
+   cli.config["show_menu_table_header"] = True
 
-   def greet(name):
+   # add navigation options to the menu
+   cli.link("Main Menu", "Mathematics Menu")
+   cli.link("Main Menu", "String Menu")
+
+
+   @cli.entry(menu="Main Menu", option="Greeter")
+   def greet():
+       name = input("Enter your name: ")
        print(f"Hello, {name}!")
 
-   hyper = cli()
 
-   hyper.create_banner("hypercli")
-   hyper.create_intro("Intro", "An elegant solution to interact\n with command line tools")
+   @cli.entry(menu="Mathematics Menu", option="Add two numbers")
+   def add(num1=1, num2=1):
+       a = int(input(f"Enter first number (default {num1}): ") or num1)
+       b = int(input(f"Enter second number (default {num2}): ") or num2)
+       print(f"{a} + {b} = {a + b}")
 
-   hyper.create_menu("Main Menu", "Enter your choice")
-   hyper.add_option("Main Menu", "Checkout the Sub Menu", "Sub Menu")
-   hyper.add_option("Main Menu", "Greet", greet, "John")
-   hyper.add_option("Main Menu", "Print Author Name", author_name)
 
-   hyper.create_menu("Sub Menu", "Enter your choice")
-   hyper.add_option("Sub Menu", "Go Back to Main Menu", "Main Menu")
-   hyper.add_option("Sub Menu", "Checkout the Website (hyperoot.dev)", open_website)
+   @cli.entry(menu="Mathematics Menu", option="Subtract two numbers")
+   def sub(num1=1, num2=1):
+       a = int(input(f"Enter first number (default {num1}): ") or num1)
+       b = int(input(f"Enter second number (default {num2}): ") or num2)
+       print(f"{a} - {b} = {a - b}")
 
-   response = hyper.show_cli()
 
-The above script demonstrates the usage of **hypercli**. It creates a
-CLI with two menus: “Main Menu” and “Sub Menu”. Each menu has its own
-options and functions to be executed. You can customize the menus,
-options, and visual styles according to your requirements.
+   @cli.entry(menu="String Menu", option="Reverse a string")
+   def reverse():
+       string = input("Enter a string: ")
+       print(string[::-1])
+
+
+   @cli.entry(menu="String Menu", option="Show length of a string")
+   def str_length():
+       string = input("Enter a string: ")
+       print(f"Length of string is {len(string)}")
+
+
+   # run the cli
+   cli.run()
+
+.. image:: docs/assests/example_demo.gif
+
 
 License
 -------

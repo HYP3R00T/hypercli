@@ -7,7 +7,7 @@ with open("./README.md", "r") as readme:
 
 setuptools.setup(
     name="hypercli",
-    version="1.0.0",
+    version="1.0.1",
     author="HYP3R00T",
     author_email="hyperoot@pm.me",
     description="Generate enhanced menu-driven CLI programs with ease!",
