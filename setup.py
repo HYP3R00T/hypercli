@@ -10,7 +10,7 @@ setuptools.setup(
     version="1.0.0",
     author="HYP3R00T",
     author_email="hyperoot@pm.me",
-    description="Generate enhanced menu-driven CLI programs with ease",
+    description="Generate enhanced menu-driven CLI programs with ease!",
     url="https://github.com/HYP3R00T/hypercli",
     long_description=desc,
     long_description_content_type="text/markdown",
