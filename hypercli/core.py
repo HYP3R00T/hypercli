@@ -9,17 +9,17 @@ from termcolor import cprint
 
 try:
     width = get_terminal_size()[0]
-except:
+except Exception:
     width = 80
 
 
-class hypercli:
+class Hypercli:
     def __init__(self) -> None:
         """
         The above function is the initialization method for a class that sets up various configuration
         options and properties.
         """
-        self.menu_wrapper = dict()
+        self.menu_wrapper = {}
         self.console = Console()
         self.config = {
             "show_banner": True,
@@ -42,12 +42,12 @@ class hypercli:
             "menu_exit_color": "red bold",
             "menu_border_style": box.SQUARE,
             "menu_table_header_color": "bright_black",
-            "error_message_title": "\u26A0  ERROR \u26A0 ",
+            "error_message_title": "\u26a0  ERROR \u26a0 ",
             "error_message": "Invalid input\nProgram is terminated",
             "error_message_title_color": "red bold",
             "error_message_color": "magenta",
             "error_message_justify": "center",
-            "exit_message_title": "\u263A BYE \u263A ",
+            "exit_message_title": "\u263a BYE \u263a ",
             "exit_message": "Have a great day\nProgram is terminated",
             "exit_message_title_color": "green bold",
             "exit_message_color": "blue",
@@ -75,9 +75,9 @@ class hypercli:
         to True (optional)
         """
         if from_menu not in self.menu_wrapper:
-            self.menu_wrapper[from_menu] = dict()
+            self.menu_wrapper[from_menu] = {}
         if to_menu not in self.menu_wrapper:
-            self.menu_wrapper[to_menu] = dict()
+            self.menu_wrapper[to_menu] = {}
         self.menu_wrapper[from_menu][f"{option_text} {to_menu}"] = to_menu
         if reverse:
             self.menu_wrapper[to_menu][f"{option_text} {from_menu}"] = from_menu
@@ -110,7 +110,7 @@ class hypercli:
 
         def decorator(func):
             if menu not in self.menu_wrapper:
-                self.menu_wrapper[menu] = dict()
+                self.menu_wrapper[menu] = {}
             if option not in self.menu_wrapper[menu]:
                 self.menu_wrapper[menu][option] = func
             if menu_context_color:
@@ -132,8 +132,8 @@ class hypercli:
         is used to access the corresponding menu dictionary in the `self.menu_wrapper` attribute
         :return: different values based on the conditions met. The possible return values are:
         """
-        choice = input("\u279D ")
-        for index, (k, v) in enumerate(self.menu_wrapper[menu_name].items()):
+        choice = input("\u279d ")
+        for index, (_k, v) in enumerate(self.menu_wrapper[menu_name].items()):
             if choice == "q" or choice == "Q":
                 return self.exit()
             elif choice.isalnum() and not choice.isnumeric():
@@ -175,8 +175,8 @@ class hypercli:
                 ),
                 justify=self.config["intro_justify"],
             )
-        if menu_name == None:
-            for menu, options in self.menu_wrapper.items():
+        if menu_name is None:
+            for menu, _options in self.menu_wrapper.items():
                 menu_name = menu
                 break
         table = Table(
@@ -187,17 +187,11 @@ class hypercli:
         if self.config["show_menu_table_header"]:
             table.add_column("Choice", justify="center")
             table.add_column("Option", justify="left")
-        for index, (option, option_value) in enumerate(
-            self.menu_wrapper[menu_name].items()
-        ):
-            table.add_row(
-                str(index + 1), str(option), style=self.config["menu_option_color"]
-            )
+        for index, (option, _option_value) in enumerate(self.menu_wrapper[menu_name].items()):
+            table.add_row(str(index + 1), str(option), style=self.config["menu_option_color"])
         table.add_section()
         if self.config["show_exit"]:
-            table.add_row(
-                "q", self.config["exit_text"], style=self.config["menu_exit_color"]
-            )
+            table.add_row("q", self.config["exit_text"], style=self.config["menu_exit_color"])
         self.console.print(table, justify="left")
         return self.enter_choice(menu_name)
 

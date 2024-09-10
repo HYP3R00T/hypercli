@@ -1,0 +1,13 @@
+{
+    "markdownlint.config": {
+        "MD033": {
+            "allowed_elements": [
+                "iframe",
+                "a",
+                "h1",
+                "p",
+                "img",
+            ]
+        }
+    }
+}

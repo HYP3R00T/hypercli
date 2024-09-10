@@ -39,9 +39,9 @@
 
 ### Resources
 
-- Link to rich color palette: https://rich.readthedocs.io/en/stable/appendix/colors.html
-- Link to rich box styles: https://rich.readthedocs.io/en/stable/appendix/box.html
-- Link to pyfiglet font list: http://www.figlet.org/
+- [rich color palette](https://rich.readthedocs.io/en/stable/appendix/colors.html)
+- [rich box styles](https://rich.readthedocs.io/en/stable/appendix/box.html)
+- [pyfiglet font list](http://www.figlet.org/)
 
 ## The list of methods
 

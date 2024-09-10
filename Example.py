@@ -1,8 +1,8 @@
 # import hypercli
-from hypercli import hypercli
+from hypercli import Hypercli
 
 # create an instance of hypercli
-cli = hypercli()
+cli = Hypercli()
 
 # configure the instance
 cli.config["banner_text"] = "HYPERCLI"

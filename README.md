@@ -1,15 +1,11 @@
-```
- _                               _ _
-| |                             | (_)
-| |__  _   _ _ __   ___ _ __ ___| |_
-| '_ \| | | | '_ \ / _ \ '__/ __| | |
-| | | | |_| | |_) |  __/ | | (__| | |
-|_| |_|\__, | .__/ \___|_|  \___|_|_|
-        __/ | |
-       |___/|_|               v 1.0.1
-```
+<h1 align="center">hypercli</h1>
 
-# hypercli
+<p align="center">
+<img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/HYP3R00T/hypercli/pypi_publish.yml?style=for-the-badge&labelColor=%2324273a&color=%23b7bdf8">
+<a src="https://pypi.org/project/hypercli/" target="_blank">
+<img alt="Pypi versions" src="https://img.shields.io/pypi/v/hypercli?style=for-the-badge&labelColor=%2324273a&color=%23b7bdf8">
+</a>
+</p>
 
 **hypercli** is a Python package that provides an elegant solution for interacting with command line tools. It offers a menu-based command line interface (CLI) that allows users to navigate through different options and execute functions based on their choices.
 
@@ -23,76 +19,14 @@
 
 You can install **hypercli** using pip. Open your terminal and run the following command:
 
-```
+```bash
 pip install hypercli
 ```
 
 ## Usage
 
-To use **hypercli**, import the `hypercli` module from the `hypercli` package and create an instance of the `hypercli` class. You can then define your menus, options, and functions to be executed. Finally, call the `run()` method to start the CLI interface.
-
-Use the [Wiki](docs/Wiki.md) for more information on the configs, methods, and resources available in **hypercli**.
-
-Here's an example of how to use **hypercli**:
-
-```python
-# import hypercli
-from hypercli import hypercli
-
-# create an instance of hypercli
-cli = hypercli()
-
-# configure the instance
-cli.config["banner_text"] = "HYPERCLI"
-cli.config["intro_title"] = "Intro"
-cli.config["intro_content"] = "Generate enhanced menu-driven CLI programs with ease!"
-cli.config["show_menu_table_header"] = True
-
-# add navigation options to the menu
-cli.link("Main Menu", "Mathematics Menu")
-cli.link("Main Menu", "String Menu")
-
-
-@cli.entry(menu="Main Menu", option="Greeter")
-def greet():
-    name = input("Enter your name: ")
-    print(f"Hello, {name}!")
-
-
-@cli.entry(menu="Mathematics Menu", option="Add two numbers")
-def add(num1=1, num2=1):
-    a = int(input(f"Enter first number (default {num1}): ") or num1)
-    b = int(input(f"Enter second number (default {num2}): ") or num2)
-    print(f"{a} + {b} = {a + b}")
-
-
-@cli.entry(menu="Mathematics Menu", option="Subtract two numbers")
-def sub(num1=1, num2=1):
-    a = int(input(f"Enter first number (default {num1}): ") or num1)
-    b = int(input(f"Enter second number (default {num2}): ") or num2)
-    print(f"{a} - {b} = {a - b}")
-
-
-@cli.entry(menu="String Menu", option="Reverse a string")
-def reverse():
-    string = input("Enter a string: ")
-    print(string[::-1])
-
-
-@cli.entry(menu="String Menu", option="Show length of a string")
-def str_length():
-    string = input("Enter a string: ")
-    print(f"Length of string is {len(string)}")
-
-
-# run the cli
-cli.run()
-
-```
-
-![](docs/assests/example_demo.gif)
-
+Checkout [documentation](https://hypercli.hyperoot.dev) for more information on the configs, methods, and resources available in **hypercli**.
 
 ## License
 
-This project is licensed under the MIT License. See the [MIT](https://choosealicense.com/licenses/mit/) file for more information.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.

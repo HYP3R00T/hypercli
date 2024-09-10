@@ -1,3 +1,59 @@
+[tool.poetry]
+name = "hypercli"
+version = "2.0.1"
+description = "Generate enhanced menu-driven CLI programs with ease."
+authors = ["hyperoot <rajesh@proton.me>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+rich = "^13.7.1"
+termcolor = "^2.4.0"
+pyfiglet = "^1.0.2"
+
+
+[tool.poetry.group.dev.dependencies]
+mkdocs-material = "^9.5.34"
+mkdocs-roamlinks-plugin = "^0.3.2"
+mkdocs-callouts = "^1.14.0"
+termynal = "^0.12.1"
+ruff = "^0.6.4"
+pre-commit = "^3.8.0"
+
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "I", # isort
+    "C", # flake8-comprehensions
+    "B", # flake8-bugbear
+
+]
+ignore = [
+    "E501", # line too long
+    "C901", # too complex
+
+]
+
+[tool.ruff.lint.isort]
+order-by-type = true
+relative-imports-order = "closest-to-furthest"
+extra-standard-library = ["typing"]
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
