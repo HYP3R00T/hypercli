@@ -1,4 +1,8 @@
-# Wiki
+---
+title: Reference
+hide:
+- navigation
+---
 
 ## The list of configs and relevant resources
 

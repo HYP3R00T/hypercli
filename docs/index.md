@@ -1,3 +1,9 @@
+---
+hide:
+- navigation
+---
+
+
 <h1 align="center">hypercli</h1>
 
 <p align="center">
