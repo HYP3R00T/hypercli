@@ -26,12 +26,14 @@ theme:
     - navigation.top
     - navigation.prune
     - navigation.indexes
-    # - navigation.footer
+    - navigation.footer
     - toc.follow
     - content.code.copy
-    # - search.suggest
+    - search.suggest
     # - search.highlight
     - search.share
+    - content.action.edit
+    - content.action.view
 plugins:
   - search
   - roamlinks
@@ -81,8 +83,12 @@ extra:
       link: https://github.com/HYP3R00T
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/rajesh-kumar-das/
-    - icon: fontawesome/brands/x-twitter
-      link: https://twitter.com/HYP3R00T
+    # - icon: fontawesome/brands/x-twitter
+    #   link: https://twitter.com/HYP3R00T
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@hyperoot
+    - icon: octicons/person-fill-24
+      link: https://hyperoot.dev/
   status:
     new: Recently added
 extra_css:
