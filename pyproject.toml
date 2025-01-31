@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hypercli"
-version = "2.0.5"
+version = "2.0.6"
 description = "Generate enhanced menu-driven CLI programs with ease."
 authors = ["hyperoot <rajesh@proton.me>"]
 readme = "README.md"
