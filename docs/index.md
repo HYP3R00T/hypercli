@@ -1,4 +1,6 @@
 ---
+title: Hypercli
+description: hypercli is a Python package for building interactive and customizable command-line interfaces with ease
 hide:
 - navigation
 ---

@@ -44,7 +44,10 @@ plugins:
       prompt_literal_start:
         - ">"
   - tags
-  - social
+  - social:
+      cards_layout_options:
+        background_color: "#1e1e2e"
+        color: "#cdd6f4"
 markdown_extensions:
   - footnotes
   - nl2br
