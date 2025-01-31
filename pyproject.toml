@@ -10,6 +10,8 @@ python = "^3.12"
 rich = "^13.7.1"
 termcolor = "^2.4.0"
 pyfiglet = "^1.0.2"
+cairosvg = "^2.7.1"
+pillow = "^11.1.0"
 
 
 [tool.poetry.group.dev.dependencies]
