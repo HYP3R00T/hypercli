@@ -33,7 +33,7 @@ pip install hypercli
 
 To use **hypercli**, import the `Hypercli` module from the `hypercli` package and create an instance of the `Hypercli` class. You can then define your menus, options, and functions to be executed. Finally, call the `run()` method to start the CLI interface.
 
-Use the [Wiki](./Wiki.md) for more information on the configs, methods, and resources available in **hypercli**.
+Use the [Reference](./Reference.md) for more information on the configs, methods, and resources available in **hypercli**.
 
 Here's an example of how to use **hypercli**:
 
