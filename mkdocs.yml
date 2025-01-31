@@ -44,6 +44,7 @@ plugins:
       prompt_literal_start:
         - ">"
   - tags
+  - social
 markdown_extensions:
   - footnotes
   - nl2br
